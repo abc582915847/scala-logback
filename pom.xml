@@ -77,7 +77,7 @@
             <dependency>
                 <groupId>org.scala-lang</groupId>
                 <artifactId>scala-compiler</artifactId>
-                <version>${scala.version}</version>
+                <version>[2.11.12,)</version>
                 <scope>${scope}</scope>
             </dependency>
         </dependencies>
