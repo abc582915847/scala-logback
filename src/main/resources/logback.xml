@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- For assistance related to logback-translator or configuration  -->
+<!-- files in general, please contact the logback user mailing list -->
+<!-- at http://www.qos.ch/mailman/listinfo/logback-user             -->
+<!--                                                                -->
+<!-- For professional support please see                            -->
+<!--    http://www.qos.ch/shop/products/professionalSupport         -->
+<!--                                                                -->
+<configuration debug="false">
+    <property name="LOG_HOME" value="logs"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoder 默认配置为PatternLayoutEncoder -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%5level] %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <appender name="scala-logger-appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--See also http://logback.qos.ch/manual/appenders.html#RollingFileAppender-->
+        <!--<File>${LOG_HOME}/xsx.log</File>-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/gql-log.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <MaxHistory>360</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern class="ch.qos.logback.classic.PatternLayout">
+                <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+                <pattern>%d{yyyy-MM-dd HH:mm:SSS} [%5level] %logger{50} - %msg%n</pattern>
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>100MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+    <!--    <root level="INFO">-->
+    <root level="${logback-log-level:-info}" additivity="false">
+        <appender-ref ref="scala-logger-appender"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <logger name="scala-logback" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="scala-logger-appender"/>
+    </logger>
+
+
+</configuration>
