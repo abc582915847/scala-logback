@@ -12,40 +12,35 @@
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoder 默认配置为PatternLayoutEncoder -->
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%5level] %logger{50} - %msg%n</pattern>
+            <pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
-    <appender name="scala-logger-appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="LOGGER-BASIC-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--See also http://logback.qos.ch/manual/appenders.html#RollingFileAppender-->
         <!--<File>${LOG_HOME}/xsx.log</File>-->
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>${LOG_HOME}/gql-log.%d{yyyy-MM-dd}.log</FileNamePattern>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/gql-log-%d{yyyy-MM-dd}.%i.log</FileNamePattern>
             <MaxHistory>360</MaxHistory>
+            <maxFileSize>500MB</maxFileSize>
         </rollingPolicy>
         <encoder>
             <pattern class="ch.qos.logback.classic.PatternLayout">
                 <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
-                <pattern>%d{yyyy-MM-dd HH:mm:SSS} [%5level] %logger{50} - %msg%n</pattern>
+                <pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
             </pattern>
             <charset>UTF-8</charset>
         </encoder>
-
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <MaxFileSize>100MB</MaxFileSize>
-        </triggeringPolicy>
     </appender>
 
-    <!--    <root level="INFO">-->
-    <root level="${logback-log-level:-info}" additivity="false">
-        <appender-ref ref="scala-logger-appender"/>
+    <root level="${LOGGER-BASIC-LEVEL:-INFO}" additivity="false">
+        <appender-ref ref="LOGGER-BASIC-APPENDER"/>
         <appender-ref ref="STDOUT"/>
     </root>
 
-    <logger name="scala-logback" additivity="false">
-        <level value="info"/>
-        <appender-ref ref="scala-logger-appender"/>
+    <logger name="LOGGER-BASIC" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="LOGGER-BASIC-APPENDER"/>
     </logger>
-
 
 </configuration>

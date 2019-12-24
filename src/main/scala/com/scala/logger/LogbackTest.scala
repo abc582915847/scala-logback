@@ -4,7 +4,7 @@ import com.typesafe.scalalogging.Logger
 
 object LogbackTest {
 
-  val LOGGER = "scala-logback"
+  val LOGGER = "LOGGER-BASIC"
   lazy val logger = Logger(org.slf4j.LoggerFactory.getLogger(LOGGER))
 
   def main(args: Array[String]): Unit = {
