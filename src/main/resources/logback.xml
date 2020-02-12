@@ -8,7 +8,7 @@
 <!--    http://www.qos.ch/shop/products/professionalSupport         -->
 <!--                                                                -->
 <configuration debug="false">
-    <property name="LOG_HOME" value="logs"/>
+    <!--    <property name="LOG_HOME" value="logs"/>-->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoder 默认配置为PatternLayoutEncoder -->
         <encoder>
@@ -20,7 +20,7 @@
         <!--See also http://logback.qos.ch/manual/appenders.html#RollingFileAppender-->
         <!--<File>${LOG_HOME}/xsx.log</File>-->
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <FileNamePattern>${LOG_HOME}/gql-log-%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <FileNamePattern>${logback.home:-logs}/gql-log-%d{yyyy-MM-dd}.%i.log</FileNamePattern>
             <MaxHistory>360</MaxHistory>
             <maxFileSize>500MB</maxFileSize>
         </rollingPolicy>
